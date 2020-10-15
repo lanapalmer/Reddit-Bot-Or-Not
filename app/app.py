@@ -14,10 +14,10 @@ def index():
 
 @app.route('/prediction', methods=['POST'])
 def prediction():
-	df = process_inputs()
+	final_df = process_inputs()
 
-	comment = df.Comment[0]
-	return render_template('prediction.html', variable='A BOT')
+	comment = final_df.AvgWordLength[0]
+	return render_template('prediction.html', variable=comment)
    
 
 def process_inputs():
@@ -31,7 +31,23 @@ def process_inputs():
 		else:
 			inputs[key] = val
 
-	return pd.DataFrame(inputs, index=[0])
+	df = pd.DataFrame(inputs, index=[0])
+
+	#Feature Engineering
+    #Replace Special Characters
+	df['CommentClean'] = df['Comment'].str.replace('[^a-zA-Z]', ' ')
+	df['CommentClean'] = df['CommentClean'].str.lower()
+	df['CommentLength'] = df['CommentClean'].str.split().str.len()
+
+	#Average Word Length
+	df['CommentCharacters'] = df['CommentClean'].str.len()
+	df['AvgWordLength'] = df['CommentCharacters'] / df['CommentLength']
+	
+	#Drop Columns
+	df2 = df.drop(['Comment', 'CommentClean', 'Subreddit'], axis=1)
+
+	
+	return df
 
 
 if __name__ == '__main__':

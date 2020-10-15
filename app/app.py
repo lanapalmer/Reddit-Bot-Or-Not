@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, request
-#import pandas as pd
+import pandas as pd
 
 app = Flask(__name__)
 
@@ -16,7 +16,7 @@ def index():
 def prediction():
 	df = process_inputs()
 
-	#comment = df.Comment[0]
+	comment = df.Comment[0]
 	return render_template('prediction.html', variable='A BOT')
    
 
@@ -31,7 +31,7 @@ def process_inputs():
 		else:
 			inputs[key] = val
 
-	#return pd.DataFrame(inputs, index=[0])
+	return pd.DataFrame(inputs, index=[0])
 
 
 if __name__ == '__main__':

@@ -1,5 +1,11 @@
 from flask import Flask, render_template, redirect, request
 import pandas as pd
+import pickle
+
+# load model
+model = pickle.load(open('models/dummyModel.pkl','rb'))
+scaler = pickle.load(open('models/scaler.pkl','rb'))
+
 
 app = Flask(__name__)
 
@@ -14,10 +20,17 @@ def index():
 
 @app.route('/prediction', methods=['POST'])
 def prediction():
-	final_df = process_inputs()
+	scaled = process_inputs()
 
-	comment = final_df.AvgWordLength[0]
-	return render_template('prediction.html', variable=comment)
+	prediction = model.predict(scaled)
+
+	if prediction == 0:
+		result = "Not a Bot"
+	else:
+		result = "A Bot" 
+
+
+	return render_template('prediction.html', variable=result)
    
 
 def process_inputs():
@@ -46,8 +59,8 @@ def process_inputs():
 	#Drop Columns
 	df2 = df.drop(['Comment', 'CommentClean', 'Subreddit'], axis=1)
 
-	
-	return df
+	#Scale
+	return scaler.transform(df2)
 
 
 if __name__ == '__main__':

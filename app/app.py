@@ -31,7 +31,7 @@ def process_inputs():
 		else:
 			inputs[key] = val
 
-	return pd.DataFrame(inputs, index=[0])
+	#return pd.DataFrame(inputs, index=[0])
 
 
 if __name__ == '__main__':

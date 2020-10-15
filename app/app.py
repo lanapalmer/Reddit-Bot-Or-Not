@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, request
-import pandas as pd
+#import pandas as pd
 
 app = Flask(__name__)
 

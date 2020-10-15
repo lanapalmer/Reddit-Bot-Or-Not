@@ -23,6 +23,15 @@ h1 {
   padding-bottom: 20px;
 }
 
+h3 {
+  color: black;
+  font-size: 34px;
+  font-family: 'Josefin Sans', sans-serif;
+  text-align: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
 .center {
   margin: auto;
   width: 50%;

@@ -33,15 +33,6 @@ def process_inputs():
 
 	return pd.DataFrame(inputs, index=[0])
 
+
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-
-def process_inputs():
-    '''
-    Process input data for the model training.
-    '''
-
-    int_keys = ('Pclass', 'SibSp', 'Parch')
-    inputs = {}

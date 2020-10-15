@@ -16,7 +16,7 @@ def index():
 def prediction():
 	df = process_inputs()
 
-	comment = df.Comment[0]
+	#comment = df.Comment[0]
 	return render_template('prediction.html', variable='A BOT')
    
 

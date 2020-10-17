@@ -11,7 +11,7 @@ cv = pickle.load(open('models/cv.pkl','rb'))
 tf = pickle.load(open('models/tf.pkl','rb'))
 scaler = pickle.load(open('models/scaler.pkl','rb'))
 model = pickle.load(open('models/Logistic_Regression_Model.pkl','rb'))
-bsr = pd.read_csv('Models/sr.csv')
+bsr = pd.read_csv('models/sr.csv')
 
 app = Flask(__name__)
 

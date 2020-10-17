@@ -1,11 +1,17 @@
+#Load packages
 from flask import Flask, render_template, redirect, request
 import pandas as pd
 import pickle
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
 
-# load model
-model = pickle.load(open('models/dummyModel.pkl','rb'))
+# load model and dependencies
+cv = pickle.load(open('models/cv.pkl','rb'))
+tf = pickle.load(open('models/tf.pkl','rb'))
 scaler = pickle.load(open('models/scaler.pkl','rb'))
-
+model = pickle.load(open('models/Logistic_Regression_Model.pkl','rb'))
+bsr = pd.read_csv('Models/sr.csv')
 
 app = Flask(__name__)
 
@@ -24,8 +30,8 @@ def prediction():
 
 	prediction = model.predict(scaled)
 
-	if prediction == 0:
-		result = "Not a Bot"
+	if prediction == 1:
+		result = "A Bot"
 	else:
 		result = "A Bot" 
 
@@ -56,8 +62,29 @@ def process_inputs():
 	df['CommentCharacters'] = df['CommentClean'].str.len()
 	df['AvgWordLength'] = df['CommentCharacters'] / df['CommentLength']
 	
+	#Get dummies for Subreddit
+	subreddit = df.iloc[0]['Subreddit']
+
+	if subreddit in bsr.columns.values:
+		bsr[subreddit] = 1
+
+	#Join dummies with df
+	df2 = pd.concat([df, bsr], axis=1)
+
+	#Count Vectorizer
+	count_vector = cv.transform(df2['CommentClean'])
+
+	#TFIDF
+	TFIDF = tf.transform(count_vector)
+
+	#Create dataframe of features
+	cv_df = pd.DataFrame(TFIDF.toarray(), columns=cv.get_feature_names()).add_prefix('Counts_')
+
+	#Join dataframes
+	df2 = df2.join(cv_df)
+
 	#Drop Columns
-	df2 = df.drop(['Comment', 'CommentClean', 'Subreddit'], axis=1)
+	df2 = df2.drop(['Comment', 'CommentClean', 'Subreddit'], axis=1)
 
 	#Scale
 	return scaler.transform(df2)

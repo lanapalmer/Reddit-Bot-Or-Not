@@ -29,14 +29,19 @@ def prediction():
 	scaled = process_inputs()
 
 	prediction = model.predict(scaled)
+	probability = model.predict_proba(scaled)
+
+	nb_prob = (probability[0][0] * 100).round(2)
+
+	b_prob = (probability[0][1] * 100).round(2)
 
 	if prediction == 1:
 		result = "A Bot"
 	else:
-		result = "A Bot" 
+		result = "Not a Bot"
 
 
-	return render_template('prediction.html', variable=result)
+	return render_template('prediction.html', res_var=result, nb_prob_var= nb_prob, b_prob_var=b_prob)
    
 
 def process_inputs():

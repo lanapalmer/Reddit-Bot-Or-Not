@@ -40,8 +40,12 @@ def prediction():
 	else:
 		result = "Not a Bot"
 
+	#Create Chart
+	labels = ["Bot", "Not a Bot"]
+	values = [b_prob, nb_prob]
 
-	return render_template('prediction.html', res_var=result, nb_prob_var= nb_prob, b_prob_var=b_prob)
+
+	return render_template('prediction.html', res_var=result, nb_prob_var= nb_prob, b_prob_var=b_prob, values=values, labels=labels)
    
 
 def process_inputs():

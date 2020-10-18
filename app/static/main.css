@@ -5,6 +5,7 @@ p {
   font-size: 14px;
   font-family: 'Domine', serif;
   text-align: center;
+  padding-bottom: 10px;
 }
 
 input[type=text] {
@@ -30,6 +31,10 @@ h3 {
   text-align: center;
   padding-top: 20px;
   padding-bottom: 20px;
+}
+
+canvas {
+	padding-top: 20px;
 }
 
 .center {

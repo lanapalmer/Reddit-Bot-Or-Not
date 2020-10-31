@@ -9,12 +9,13 @@
 
   </head>
   <body>
+    <div id="page-wrap">
     <div class = "classification" style="margin:auto">
       <h1>Bot or Not? Bot Classification on Reddit.</h1>
       <p>The model predicts that this user is:</p>
       <h1>{{ res_var }}</h1>
 
-      <p>Based on this model, the probability that this <b>is a bot</b> is {{ b_prob_var }}%, and the probability that it is <b>not a bot is</b> {{ nb_prob_var }}%</p>
+      <p>Based on this model, the probability that this <b>is a bot</b> is {{ b_prob_var }}%, and the probability that it is <b>not a bot is</b> {{ nb_prob_var }}</p>
 
     <canvas id="myChart" width="400" height="400" style="margin:auto"></canvas>
     <script>
@@ -24,7 +25,10 @@
       Chart.defaults.scale.ticks.beginAtZero = true;
       Chart.defaults.scale.gridLines.display = false;
       Chart.defaults.global.legend.display = false;
-      Chart.defaults.global.defaultFontFamily = 'Josefin Sans';
+      Chart.defaults.global.defaultFontFamily = 'Domine';
+      Chart.defaults.global.title.display = true;
+      Chart.defaults.global.title.text = "Feature Importance: Gradient Boosting Model";
+      Chart.defaults.global.title.fontColor = "Black";
 
 
       // define the chart data
@@ -45,12 +49,16 @@
 
       // create the chart using the chart canvas
       var myChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'horizontalBar',
         data: chartData,
 
       });
+</script>
 
-    </script>
   </div>
+    <div class="bdiv" style="margin:auto">
+        <a class="aButton" href="/" style="margin:auto">RELOAD</a>
+  </div>
+</div>
 </body>
 </html>
